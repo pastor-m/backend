@@ -134,4 +134,12 @@ router.get("/githubcallback", passport.authenticate("github", {failureRedirect:"
 
     res.redirect("/profile");
 })
+
+router.get("/current", async (req,res)=>{
+    if(!req.user) {return res.status(400).send("Invalid credentials");}
+    else {
+        res.render("profile", {user: req.session.user});
+        }
+})
+
 export default router;
