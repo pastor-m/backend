@@ -56,16 +56,17 @@ class ProductsController {
     //Agregamos producto
     async addProd(req, res, next){
         try {
-            if(!req.body.title || !req.body.body || !req.body.price){
+            if(!req.body.title || !req.body.description || !req.body.price){
                 throw CustomError.createError({
                     name: "New product",
                     cause: infoError(req.body.title,req.body.description, req.body.price),
                     message: "Error trying to create a product",
                     code: Errors.INVLID_TYPE
                 })
+            } else{
+                await productsService.addProd(req.body);
+                res.send({message: "New product added"});
             }
-            await productsService.addProd(req.body);
-            res.send({message: "New product added"});
         } catch (error) {
             next(error)
         }

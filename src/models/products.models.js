@@ -36,12 +36,12 @@ const productSchema = new mongoose.Schema({
         type: String,
         required: true
     },
-    owner: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "users",
-        default: {type: String, default: 'admin'}, 
-        required: true
-    }
+    // owner: {
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "users",
+    //     default: {type: String, default: 'admin'}, 
+    //     required: true
+    // }
 });
 
 productSchema.plugin(mongoosePaginate);

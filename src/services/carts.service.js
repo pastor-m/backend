@@ -18,7 +18,8 @@ class CartsService {
 
     async getCart(cartId) {
         try {
-            let cart = await CartsModel.findById(cartId).populate("products.product").lean()
+            let cart = await CartsModel.findById(cartId)
+            // .populate("products.product").lean()
             return cart
         } catch (error) {
             throw new Error("Error while getting a cart")
