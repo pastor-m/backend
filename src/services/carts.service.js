@@ -25,7 +25,15 @@ class CartsService {
             throw new Error("Error while getting a cart")
         }
     }
-
+    
+    async getCarts(){
+        try {
+            let carts = await CartsModel.find()
+            return carts;
+        } catch (error) {
+            throw new Error("Error while getting all carts")
+        }
+    }
     async addCartProd(prodId,cartId,quantity){
         try {
             const newProduct = {

@@ -18,7 +18,24 @@ describe("Testing Carts Service", function(){
         await mongoose.disconnect();
     })
 
-    it("Carts POST should be able to adda a product to the cart list", async function(){
+    it("Carts POST should be able to add a product to the cart list", async function(){
         this.timeout(5000);
+        const result = await cartsService.addCart();
+        expect(result).to.have.property("_id")
     })
+
+    after(async function(){
+        await mongoose.disconnect();
+    })
+
+    it("Last cart added should have an empty array of products", async function(){
+        this.timeout(5000);
+        const result = await cartsService.addCart();
+        expect(result.products).to.deep.equal([]);
+    })
+
+    after(async function(){
+        await mongoose.disconnect();
+    })
+
 })

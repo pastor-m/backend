@@ -1,6 +1,5 @@
 import mongoose from "mongoose";
 import ProductsService from "../src/services/products.service.js";
-import assert from "assert"
 const productsService = new ProductsService();
 
 mongoose.connect("mongodb+srv://pastorml09:coderhouse@cluster0.pq1hrhv.mongodb.net/Ecommerce?retryWrites=true&w=majority&appName=Cluster0")
