@@ -49,12 +49,17 @@ const initializePassport = () => {
                     password: createHash(password),
                     cart: newCart.id,
                     role: "user"
-                 }
-                 let result = await UserModel.create(newUser);
-                 return done (null, result)
+                }
+
+                let result = await UserModel.create(newUser);
+
+                console.log(result)
+                
             }
+            return done (null, result)
 
         } catch (error) {
+            
             return done(error);
         }
     }))
@@ -64,9 +69,9 @@ const initializePassport = () => {
         try {
             
             const user = await UserModel.findOne({email});
-            console.log(user);
+            
             if(!user){
-                console.log("User doesn't exist")
+                
                 return done (null, false);
             }
 
@@ -95,7 +100,7 @@ const initializePassport = () => {
         clientSecret: "186936dc3433d2de68afbe252598d5ec63f7eb78",
         callbackURL: "http://localhost:8080/sessions/githubcallback"
     }, async(accessToken, refreshToken, profile, done)=>{
-        console.log("Perfil del ususario:", profile._json.email)
+        
         try {
             let user = await UserModel.findOne({email: profile._json.email});
 

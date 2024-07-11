@@ -7,7 +7,7 @@ import passport from "passport";
 
 //Register
 router.post("/", passport.authenticate("register", {
-    failureRedirect: "/sessions/failedregister"}), async(req,res)=> {
+    failureRedirect: "/sessions/failedregister"}), async(req,res, next)=> {
         
         if(!req.user)return res.status(400).send("Invalid credentials"); 
             
@@ -19,11 +19,14 @@ router.post("/", passport.authenticate("register", {
                 cart: req.user.cart,
                 role: "admin"
             };
+            
+            console.log(req.user)
 
             req.session.login = true;
 
             res.redirect("/profile")
-        
+            
+            return req.user
     }
 )
 
@@ -34,9 +37,9 @@ router.get("/failedregister", async(req, res)=>{
 
 // router.post("/", async (req,res)=>{
 //     const {first_name, last_name, email, password, age} = req.body;
-    
 //     try {
 //         const userExists = await UserModel.findOne({email: email});
+//         
 //         if(userExists){
 //             return res.status(400).send("Email is already registered")
 //         } else if (!userExists && email == "adminCoder@coder.com" && password == "adminCod3r123"){
@@ -49,7 +52,6 @@ router.get("/failedregister", async(req, res)=>{
             
 //         } else {
 //             const newUser = await UserModel.create({first_name, last_name, email, password: createHash(password), age, role: "user"});
-
 //             req.session.login = true;
 //             req.session.user = {...newUser._doc}
 //             res.redirect("/profile")
@@ -110,7 +112,7 @@ router.post("/login", passport.authenticate("login", {failureRedirect: "/session
 
     req.session.save()
 
-    console.log("session login",req.session.user)
+    
 
     res.redirect("/products")
 
@@ -137,11 +139,11 @@ router.get("/logout", async (req,res)=>{
 router.get("/github", passport.authenticate("github", {scope: ["user.email"]}), async(req,res)=>{})
 
 router.get("/githubcallback", passport.authenticate("github", {failureRedirect:"/login"}), async(req,res)=>{
-    console.log(req.user.first_name)
+    
     req.session.user = req.user;
     req.session.login = true;
 
-    console.log("session login github",req.session.user)
+   
 
     res.redirect("/profile");
 })
