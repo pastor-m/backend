@@ -16,7 +16,7 @@ describe("General testing for ecommerce app", () =>{
                 role: "admin"
             }
 
-            console.log()
+        
 
             const {statusCode,ok,_body}= await request.post("/sessions/").send([userMock]);
             console.log(statusCode);
